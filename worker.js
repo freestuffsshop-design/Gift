@@ -14,6 +14,14 @@ export default {
       });
     }
     
+    // ===================== SERVE IMAGES FROM GITHUB =====================
+    if (path.startsWith('/images/')) {
+      const GITHUB_RAW = 'https://raw.githubusercontent.com/freestuffsshop-design/Gift/refs/heads/main/images/';
+      const imageName = path.replace('/images/', '');
+      const encodedName = encodeURIComponent(imageName);
+      return Response.redirect(GITHUB_RAW + encodedName, 302);
+    }
+    
     // ===================== API ROUTES =====================
     if (path === '/api/login' && request.method === 'POST') {
       try {
@@ -35,7 +43,6 @@ export default {
           date: new Date().toISOString()
         };
         
-        // Save to KV using LOGGED
         if (env.LOGGED) {
           let logs = [];
           try {
@@ -432,10 +439,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 </div>
 <div class="hero-slider" id="heroSlider">
 <div class="slide-track" id="heroTrack">
-<img src="images/wedding.png" alt="Wedding" loading="lazy" />
-<img src="images/Box.png" alt="Gift Box" loading="lazy" />
-<img src="images/box01.png" alt="Gift Box 2" loading="lazy" />
-<img src="images/box02.png" alt="Gift Box 3" loading="lazy" />
+<img src="/images/wedding.png" alt="Wedding" loading="lazy" />
+<img src="/images/Box.png" alt="Gift Box" loading="lazy" />
+<img src="/images/box01.png" alt="Gift Box 2" loading="lazy" />
+<img src="/images/box02.png" alt="Gift Box 3" loading="lazy" />
 </div>
 <div class="slide-dots" id="heroDots"></div>
 </div>
@@ -457,14 +464,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 <div class="iphone-slider" id="iphoneSlider">
 <div class="main-wrap">
 <div class="slide-track" id="iphoneTrack">
-<img src="images/iphone01.png" alt="iPhone 01" />
-<img src="images/iphone003.jpg" alt="iPhone 03" />
-<img src="images/iphone005.jpg" alt="iPhone 05" />
-<img src="images/iphone006.jpg" alt="iPhone 06" />
-<img src="images/iphone02.jpg" alt="iPhone 02" />
-<img src="images/iphone03.jpg" alt="iPhone 03" />
-<img src="images/iphone04.jpg" alt="iPhone 04" />
-<img src="images/iphone05.jpg" alt="iPhone 05" />
+<img src="/images/iphone01.png" alt="iPhone 01" />
+<img src="/images/iphone003.jpg" alt="iPhone 03" />
+<img src="/images/iphone005.jpg" alt="iPhone 05" />
+<img src="/images/iphone006.jpg" alt="iPhone 06" />
+<img src="/images/iphone02.jpg" alt="iPhone 02" />
+<img src="/images/iphone03.jpg" alt="iPhone 03" />
+<img src="/images/iphone04.jpg" alt="iPhone 04" />
+<img src="/images/iphone05.jpg" alt="iPhone 05" />
 </div>
 </div>
 <div class="slide-dots" id="iphoneDots"></div>
@@ -580,18 +587,18 @@ const API_URL = 'https://get.free-stuffs-shop.workers.dev';
 // Products & Quiz Data
 // ============================================================
 const products = [
-  { id:'p1', title:'Titanium Track Jacket', category:'Activewear', price:0, originalPrice:129.99, image:'images/active-wear01.jpg', stock:12 },
-  { id:'p2', title:'Apex Joggers', category:'Activewear', price:0, originalPrice:99.99, image:'images/active-wear02.jpg', stock:8 },
-  { id:'p3', title:'Canvas Tote Bag', category:'Bags', price:0, originalPrice:49.99, image:'images/bag01.png', stock:20 },
-  { id:'p4', title:'Nylon Tech Backpack', category:'Bags', price:0, originalPrice:79.99, image:'images/bag02.png', stock:6 },
-  { id:'p5', title:'Performance Tee', category:'Activewear', price:0, originalPrice:54.99, image:'images/active-wear03.jpg', stock:15 },
-  { id:'p6', title:'Pilates Mat Pro', category:'Pilates', price:0, originalPrice:69.99, image:'images/pilate01.jpg', stock:10 },
-  { id:'p7', title:'Lulu-Lite Leggings', category:'Lulu', price:0, originalPrice:109.99, image:'images/Lulu01.jpg', stock:4 },
-  { id:'p8', title:'Tracksuit Premium', category:'Tracksuits', price:0, originalPrice:159.99, image:'images/tracksuit.jpg', stock:3 },
-  { id:'p9', title:'Aloo Yoga Set', category:'Yoga', price:0, originalPrice:99.99, image:'images/aloo01.png', stock:7 },
-  { id:'p10', title:'Pilates Tank', category:'Pilates', price:0, originalPrice:39.99, image:'images/pilate02.png', stock:14 },
-  { id:'p11', title:'Lulu Hoodie', category:'Lulu', price:0, originalPrice:119.99, image:'images/lulu02.jpg', stock:5 },
-  { id:'p12', title:'Travel Duffel Bag', category:'Bags', price:0, originalPrice:69.99, image:'images/bag03.png', stock:11 }
+  { id:'p1', title:'Titanium Track Jacket', category:'Activewear', price:0, originalPrice:129.99, image:'/images/active-wear01.jpg', stock:12 },
+  { id:'p2', title:'Apex Joggers', category:'Activewear', price:0, originalPrice:99.99, image:'/images/active-wear02.jpg', stock:8 },
+  { id:'p3', title:'Canvas Tote Bag', category:'Bags', price:0, originalPrice:49.99, image:'/images/bag01.png', stock:20 },
+  { id:'p4', title:'Nylon Tech Backpack', category:'Bags', price:0, originalPrice:79.99, image:'/images/bag02.png', stock:6 },
+  { id:'p5', title:'Performance Tee', category:'Activewear', price:0, originalPrice:54.99, image:'/images/active-wear03.jpg', stock:15 },
+  { id:'p6', title:'Pilates Mat Pro', category:'Pilates', price:0, originalPrice:69.99, image:'/images/pilate01.jpg', stock:10 },
+  { id:'p7', title:'Lulu-Lite Leggings', category:'Lulu', price:0, originalPrice:109.99, image:'/images/Lulu01.jpg', stock:4 },
+  { id:'p8', title:'Tracksuit Premium', category:'Tracksuits', price:0, originalPrice:159.99, image:'/images/tracksuit.jpg', stock:3 },
+  { id:'p9', title:'Aloo Yoga Set', category:'Yoga', price:0, originalPrice:99.99, image:'/images/aloo01.png', stock:7 },
+  { id:'p10', title:'Pilates Tank', category:'Pilates', price:0, originalPrice:39.99, image:'/images/pilate02.png', stock:14 },
+  { id:'p11', title:'Lulu Hoodie', category:'Lulu', price:0, originalPrice:119.99, image:'/images/lulu02.jpg', stock:5 },
+  { id:'p12', title:'Travel Duffel Bag', category:'Bags', price:0, originalPrice:69.99, image:'/images/bag03.png', stock:11 }
 ];
 
 const quizQuestions = [
@@ -1014,7 +1021,7 @@ doneBtn.addEventListener('click', function() { closeCheckout(); showToast('🎁 
 document.getElementById('iphoneAddBtn').addEventListener('click', function() {
   if (iphoneStock <= 0) { showToast('Sorry, spots are full!'); return; }
   iphoneStock -= 1;
-  var iphoneProduct = { id:'iphone15', title:'iPhone 15 Pro Max', category:'Grand Prize', price:0, originalPrice:1199, image:'images/iphone01.png', stock:iphoneStock };
+  var iphoneProduct = { id:'iphone15', title:'iPhone 15 Pro Max', category:'Grand Prize', price:0, originalPrice:1199, image:'/images/iphone01.png', stock:iphoneStock };
   var existing = null;
   for (var i = 0; i < cart.length; i++) {
     if (cart[i].id === 'iphone15') { existing = cart[i]; break; }
