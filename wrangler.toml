@@ -1,0 +1,7 @@
+name = "free-stuffs-shop"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+[[kv_namespaces]]
+binding = "LOGGED"
+id = "d981483c6cc6402882b93b8c3b03ea41"
