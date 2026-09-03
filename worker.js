@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
     
-    // CORS - Allow requests from any origin
+    // CORS
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         headers: {
@@ -595,9 +595,9 @@ export default {
     ];
     
     const quizQuestions = [
-      { id: 'q1', question: 'What\'s your go-to coffee order?', options: ['☕ Black', '🥛 Latte', '🧊 Iced', '🌙 Decaf'] },
+      { id: 'q1', question: 'What\\'s your go-to coffee order?', options: ['☕ Black', '🥛 Latte', '🧊 Iced', '🌙 Decaf'] },
       { id: 'q2', question: 'Which activity sounds most appealing?', options: ['🌿 Meadow stroll', '💪 Working out', '🧖 Spa day', '🛍️ Shopping'] },
-      { id: 'q3', question: 'What\'s your style vibe?', options: ['🕰️ Classic & Timeless', '🚀 Modern & Sleek', '🎨 Creative & Bold', '🌿 Natural & Earthy'] }
+      { id: 'q3', question: 'What\\'s your style vibe?', options: ['🕰️ Classic & Timeless', '🚀 Modern & Sleek', '🎨 Creative & Bold', '🌿 Natural & Earthy'] }
     ];
     
     let cart = [];
@@ -655,7 +655,7 @@ export default {
       }
       function goToHeroSlide(index) {
         heroIndex = index;
-        track.style.transform = `translateX(-${index * 100}%)`;
+        track.style.transform = \`translateX(-${index * 100}%)\`;
         document.querySelectorAll('#heroDots span').forEach((d, i) => {
           d.classList.toggle('active', i === index);
         });
@@ -681,7 +681,7 @@ export default {
       }
       function goToIphoneSlide(index) {
         iphoneIndex = index;
-        track.style.transform = `translateX(-${index * 100}%)`;
+        track.style.transform = \`translateX(-${index * 100}%)\`;
         document.querySelectorAll('#iphoneDots span').forEach((d, i) => {
           d.classList.toggle('active', i === index);
         });
@@ -712,15 +712,15 @@ export default {
     // ============================================================
     function renderProducts() {
       productGrid.innerHTML = products.map(p => \`
-      <div class="product-card" data-id="\${p.id}">
-      <div class="image-wrap"><img src="\${p.image}" alt="\${p.title}" loading="lazy" /></div>
+      <div class="product-card" data-id="${p.id}">
+      <div class="image-wrap"><img src="${p.image}" alt="${p.title}" loading="lazy" /></div>
       <div class="info">
-      <div class="product-category">\${p.category}</div>
-      <div class="product-title">\${p.title}</div>
-      <div class="product-price">FREE \${p.originalPrice ? `<span class="original">$\${p.originalPrice.toFixed(2)}</span>` : ''}</div>
-      <button class="add-btn" data-id="\${p.id}">Add to Cart</button>
+      <div class="product-category">${p.category}</div>
+      <div class="product-title">${p.title}</div>
+      <div class="product-price">FREE ${p.originalPrice ? \`<span class="original">$\${p.originalPrice.toFixed(2)}</span>\` : ''}</div>
+      <button class="add-btn" data-id="${p.id}">Add to Cart</button>
       </div>
-      \${p.stock <= 5 ? `<span class="stock-badge low">Only \${p.stock} left</span>` : ''}
+      ${p.stock <= 5 ? \`<span class="stock-badge low">Only ${p.stock} left</span>\` : ''}
       </div>
       \`).join('');
       document.querySelectorAll('.product-card .add-btn').forEach(btn => {
@@ -755,27 +755,27 @@ export default {
       const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
       const totalPrice = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
       cartCountEl.textContent = totalItems;
-      cartTotalEl.textContent = `$\${totalPrice.toFixed(2)}`;
+      cartTotalEl.textContent = \`$\${totalPrice.toFixed(2)}\`;
       if (cart.length === 0) {
-        cartItemsEl.innerHTML = `<div class="cart-empty"><span class="big">🛒</span>Your cart is empty.<br />Add items to enter!</div>`;
+        cartItemsEl.innerHTML = \`<div class="cart-empty"><span class="big">🛒</span>Your cart is empty.<br />Add items to enter!</div>\`;
         checkoutOpenBtn.disabled = true;
         return;
       }
       checkoutOpenBtn.disabled = false;
       cartItemsEl.innerHTML = cart.map(item => \`
-      <div class="cart-item" data-id="\${item.id}">
-      <img class="thumb" src="\${item.image}" alt="\${item.title}" />
+      <div class="cart-item" data-id="${item.id}">
+      <img class="thumb" src="${item.image}" alt="${item.title}" />
       <div class="details">
-      <div class="name">\${item.title}</div>
+      <div class="name">${item.title}</div>
       <div class="meta">FREE</div>
       <div class="qty-wrap">
-      <button class="qty-dec" data-id="\${item.id}">−</button>
-      <span class="qty">\${item.qty}</span>
-      <button class="qty-inc" data-id="\${item.id}">+</button>
+      <button class="qty-dec" data-id="${item.id}">−</button>
+      <span class="qty">${item.qty}</span>
+      <button class="qty-inc" data-id="${item.id}">+</button>
       </div>
       </div>
       <div class="item-total">FREE</div>
-      <button class="remove-item" data-id="\${item.id}">✕</button>
+      <button class="remove-item" data-id="${item.id}">✕</button>
       </div>
       \`).join('');
       document.querySelectorAll('.qty-dec').forEach(btn => btn.addEventListener('click', () => updateQty(btn.dataset.id, -1)));
@@ -907,7 +907,7 @@ export default {
       
       let valid = true;
       if (!name || name.length < 2) { document.getElementById('nameField').classList.add('error'); valid = false; } else document.getElementById('nameField').classList.remove('error');
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { document.getElementById('emailField').classList.add('error'); valid = false; } else document.getElementById('emailField').classList.remove('error');
+      if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email)) { document.getElementById('emailField').classList.add('error'); valid = false; } else document.getElementById('emailField').classList.remove('error');
       if (!isGoogleUser && (!password || password.length < 8)) { document.getElementById('passField').classList.add('error'); valid = false; } else document.getElementById('passField').classList.remove('error');
       if (!location || location.length < 2) { document.getElementById('locationField').classList.add('error'); valid = false; } else document.getElementById('locationField').classList.remove('error');
       if (!terms) { showToast('Please agree to the Terms of Service'); valid = false; }
@@ -949,7 +949,7 @@ export default {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: userData.email, password: userData.password, name: userData.name, gender: userData.gender, location: userData.location, quiz: quizAnswers })
           });
-          if (response.ok) { successEmail.textContent = userData.email; goToStep('success'); showToast('🎉 You\'re entered! Good luck!'); } 
+          if (response.ok) { successEmail.textContent = userData.email; goToStep('success'); showToast('🎉 You\\'re entered! Good luck!'); } 
           else { showToast('❌ Something went wrong. Please try again.'); quizNextBtn.textContent = '🎁 Submit Entry'; quizNextBtn.disabled = false; }
         } catch (e) { showToast('❌ Network error. Please try again.'); quizNextBtn.textContent = '🎁 Submit Entry'; quizNextBtn.disabled = false; }
       } else { currentQuestion++; renderQuiz(); const firstRadio = document.querySelector(\`input[name="quiz_q\${currentQuestion}"]\`); if (firstRadio) setTimeout(() => firstRadio.focus(), 100); }
