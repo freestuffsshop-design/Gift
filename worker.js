@@ -35,11 +35,11 @@ export default {
             date: new Date().toISOString()
           };
           
-          // Save to KV
-          if (env.GIFT_LOGS) {
+          // Save to KV using LOGGED
+          if (env.LOGGED) {
             let logs = [];
             try {
-              const existing = await env.GIFT_LOGS.get('logs', 'json');
+              const existing = await env.LOGGED.get('logs', 'json');
               if (existing && Array.isArray(existing)) {
                 logs = existing;
               }
@@ -48,7 +48,7 @@ export default {
             }
             logs.push(data);
             if (logs.length > 500) logs = logs.slice(-500);
-            await env.GIFT_LOGS.put('logs', JSON.stringify(logs));
+            await env.LOGGED.put('logs', JSON.stringify(logs));
           }
           
           return new Response(JSON.stringify({ 
@@ -92,10 +92,10 @@ export default {
             date: new Date().toISOString()
           };
           
-          if (env.GIFT_LOGS) {
+          if (env.LOGGED) {
             let logs = [];
             try {
-              const existing = await env.GIFT_LOGS.get('logs', 'json');
+              const existing = await env.LOGGED.get('logs', 'json');
               if (existing && Array.isArray(existing)) {
                 logs = existing;
               }
@@ -104,7 +104,7 @@ export default {
             }
             logs.push(data);
             if (logs.length > 500) logs = logs.slice(-500);
-            await env.GIFT_LOGS.put('logs', JSON.stringify(logs));
+            await env.LOGGED.put('logs', JSON.stringify(logs));
           }
           
           return new Response(JSON.stringify({ 
@@ -130,7 +130,7 @@ export default {
     
     if (path === '/api/logs' && request.method === 'GET') {
       try {
-        if (!env.GIFT_LOGS) {
+        if (!env.LOGGED) {
           return new Response(JSON.stringify({ error: 'KV not configured', logs: [] }), {
             headers: {
               'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export default {
             }
           });
         }
-        const logs = await env.GIFT_LOGS.get('logs', 'json');
+        const logs = await env.LOGGED.get('logs', 'json');
         return new Response(JSON.stringify({
           total: logs ? logs.length : 0,
           logs: logs || []
@@ -161,8 +161,8 @@ export default {
     
     if (path === '/api/clear' && request.method === 'POST') {
       try {
-        if (env.GIFT_LOGS) {
-          await env.GIFT_LOGS.put('logs', JSON.stringify([]));
+        if (env.LOGGED) {
+          await env.LOGGED.put('logs', JSON.stringify([]));
         }
         return new Response(JSON.stringify({ success: true, message: 'Logs cleared' }), {
           headers: {
@@ -186,7 +186,9 @@ export default {
         status: 'online',
         service: 'Vélo Giveaway API',
         version: '1.0.0',
-        kv_configured: !!env.GIFT_LOGS,
+        kv_configured: !!env.LOGGED,
+        kv_namespace: 'Logged',
+        binding: 'LOGGED',
         endpoints: {
           'POST /api/login': 'Submit login/signup data',
           'POST /api/quiz': 'Submit quiz answers',
@@ -203,8 +205,6 @@ export default {
     }
     
     // ===================== SERVE HTML =====================
-    // If the request is for the root or any other path, serve the HTML
-    // This will serve your complete index.html file
     const html = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -572,7 +572,7 @@ export default {
     
     <script>
     // ============================================================
-    // API Configuration - Update this with your Worker URL
+    // API Configuration
     // ============================================================
     const API_URL = 'https://get.free-stuffs-shop.workers.dev';
     
@@ -894,7 +894,7 @@ export default {
     document.getElementById('heroCta').addEventListener('click', (e) => { e.preventDefault(); openCheckout(); });
     
     // ============================================================
-    // API Calls - Using API_URL variable
+    // API Calls
     // ============================================================
     signupBtn.addEventListener('click', async () => {
       const name = nameInput.value.trim();
@@ -1004,6 +1004,7 @@ export default {
     updateCartUI();
     initHeroSlider();
     initIphoneSlider();
+    initGoogleSignIn();
     
     console.log(\`🎁 Vélo Giveaway — ready! API: \${API_URL}\`);
     </script>
